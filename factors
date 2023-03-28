@@ -1,23 +1,20 @@
 #!/usr/bin/python3
 import sys
 
+def factorize(num):
+    for i in range(2, num//2+1):
+        if num % i == 0:
+            return '{0}={1}*{2}'.format(num, i, num//i)
+    return '{0} is prime!'.format(num)
 
-def factoring():
-    factor_file = sys.argv[1]
-    with open(factor_file) as fd:
-        for number in fd:
-            number = int(number)
-            if number % 2 == 0:
-                    print("{}={}*{}".format(number, number // 2, 2))
-                    continue
-            i = 3
-            while i < number // 2:
-                if number % i == 0:
-                    print("{}={}*{}".format(number, number // i, i))
-                    break
-                i = i + 2
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print('Usage: factors <file>')
+        sys.exit(1)
 
-            if i == (number // 2) + 1:
-                print("{}={}*{}".format(number, number, 1))
+    filename = sys.argv[1]
+    with open(filename) as f:
+        for line in f:
+            num = int(line.strip())
+            print(factorize(num))
 
-factoring()
